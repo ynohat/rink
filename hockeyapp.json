@@ -1,0 +1,98 @@
+{
+    "name": "HockeyApp API",
+    "base": "https://rink.hockeyapp.net/api/2",
+    "version": "2",
+    "dataTypes": {
+        "auth_token_rights": {
+            "type": "enum",
+            "values": {
+                "full_access": 0,
+                "upload_only": 1,
+                "read_only": 2,
+                "upload_and_release": 3
+            }
+        },
+        "notes_type": {
+            "type": "enum",
+            "values": {
+                "textile": 0,
+                "markdown": 1
+            }
+        },
+        "notify_recipents": {
+            "type": "enum",
+            "values": {
+                "none": 0,
+                "markdown": 1
+            }
+        },
+        "installable": {
+            "type": "enum",
+            "values": {
+                "no": 1,
+                "yes": 2
+            }
+        },
+        "mandatory": {
+            "type": "enum",
+            "values": {
+                "no": 0,
+                "yes": 1
+            }
+        }
+    },
+    "defaults": {
+        "responseType": "application/json",
+        "params": {
+            "token": {
+                "place": "header",
+                "internalName": "X-HockeyAppToken"
+            }
+        }
+    },
+    "endpoints": {
+        "get_auth_tokens": {
+            "description": "Lists all API tokens for the logged user.",
+            "path": "auth_tokens",
+            "method": "GET"
+        },
+        "post_auth_tokens": {
+            "description": "Creates a new token.",
+            "path": "auth_tokens",
+            "method": "POST",
+            "contentType": "multipart/form-data",
+            "params": {
+                "rights": {
+                    "type": "auth_token_rights",
+                    "required": true
+                }
+            }
+        },
+        "get_apps": {
+            "description": "List all apps for the logged user, including owned apps, developer apps, member apps, and tester apps.",
+            "path": "apps",
+            "method": "GET"
+        },
+        "post_apps_upload": {
+            "description": "Upload an .ipa, .apk, or .zip file to create a new app. If an app with the same bundle identifier or package name and the same release type already exists, the uploaded file is assigned to this existing app.",
+            "path": "apps/upload",
+            "method": "POST",
+            "contentType": "multipart/form-data",
+            "params": {
+                "ipa": { "type": "file", "required": true },
+                "dsym": { "type": "file" },
+                "notes": { "type": "scalar" },
+                "notes_type": { "type": "notes_type" },
+                "notify": { "type": "notify_recipents" },
+                "status": { "type": "installable" },
+                "tags": { "type": "scalar" },
+                "teams": { "type": "scalar" },
+                "users": { "type": "scalar" },
+                "mandatory": { "type": "mandatory" },
+                "commit_sha": { "type": "scalar" },
+                "build_server_url": { "type": "scalar" },
+                "repository_url": { "type": "scalar" }
+            }
+        }
+    }
+}

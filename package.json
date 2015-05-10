@@ -1,0 +1,27 @@
+{
+  "name": "rink",
+  "version": "0.0.1",
+  "description": "Node wrapper around the hockeyapp API.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:ynohat/rink.git"
+  },
+  "keywords": [
+    "hockeyapp"
+  ],
+  "author": "Anthony Hogg",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ynohat/rink/issues"
+  },
+  "homepage": "https://github.com/ynohat/rink",
+  "dependencies": {
+    "lodash": "^3.8.0",
+    "promise": "^7.0.1",
+    "request": "^2.55.0"
+  }
+}
