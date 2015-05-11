@@ -29,8 +29,8 @@
         "installable": {
             "type": "enum",
             "values": {
-                "no": 1,
-                "yes": 2
+                "not_installable": 1,
+                "installable": 2
             }
         },
         "mandatory": {
@@ -38,6 +38,15 @@
             "values": {
                 "no": 0,
                 "yes": 1
+            }
+        },
+        "release_type": {
+            "type": "enum",
+            "values": {
+                "alpha": 2,
+                "beta": 0,
+                "store": 1,
+                "enterprise": 3
             }
         }
     },
@@ -54,7 +63,17 @@
         "get_auth_tokens": {
             "description": "Lists all API tokens for the logged user.",
             "path": "auth_tokens",
-            "method": "GET"
+            "method": "GET",
+            "params": {
+                "username": {
+                    "place": "auth",
+                    "required": true
+                },
+                "password": {
+                    "place": "auth",
+                    "required": true
+                }
+            }
         },
         "post_auth_tokens": {
             "description": "Creates a new token.",
@@ -89,6 +108,7 @@
                 "teams": { "type": "scalar" },
                 "users": { "type": "scalar" },
                 "mandatory": { "type": "mandatory" },
+                "release_type": { "type": "release_type" },
                 "commit_sha": { "type": "scalar" },
                 "build_server_url": { "type": "scalar" },
                 "repository_url": { "type": "scalar" }
