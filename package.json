@@ -13,6 +13,9 @@
   "keywords": [
     "hockeyapp"
   ],
+  "bin": {
+    "rink": "./bin/rink.js"
+  },
   "author": "Anthony Hogg",
   "license": "MIT",
   "bugs": {
