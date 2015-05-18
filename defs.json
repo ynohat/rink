@@ -30,8 +30,8 @@
         "installable": {
             "type": "enum",
             "values": {
-                "not_installable": 1,
-                "installable": 2
+                "no": 1,
+                "yes": 2
             }
         },
         "mandatory": {
