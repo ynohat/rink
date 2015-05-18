@@ -104,7 +104,7 @@
                 "notes": { "type": "scalar" },
                 "notes_type": { "type": "notes_type" },
                 "notify": { "type": "notify_recipents" },
-                "status": { "type": "installable" },
+                "installable": { "type": "installable" },
                 "tags": { "type": "scalar" },
                 "teams": { "type": "scalar" },
                 "users": { "type": "scalar" },
