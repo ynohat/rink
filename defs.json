@@ -23,7 +23,8 @@
             "type": "enum",
             "values": {
                 "none": 0,
-                "markdown": 1
+                "valid": 1,
+                "all": 2
             }
         },
         "installable": {
