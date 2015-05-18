@@ -104,21 +104,25 @@ Api.Endpoint.prototype.getParameter = function (name) {
 };
 
 Api.Endpoint.prototype.call = function (params) {
-    params = params || {};
-    // check if any required params were omitted
-    Object.keys(this.def.params || {}).forEach(function (name) {
-        var parameter = this.getParameter(name);
-        if (parameter.required() && !params.hasOwnProperty(name)) {
-            throw new Error("missing required parameter: "+name);
-        }
-    }.bind(this));
-    // process provided args
-    var request = new Api.Request(this);
-    Object.keys(params).forEach(function (name) {
-        var parameter = this.getParameter(name);
-        parameter.process(request, params[name]);
-    }.bind(this));
-    return request.exec();
+    try {
+        params = params || {};
+        // check if any required params were omitted
+        Object.keys(this.def.params || {}).forEach(function (name) {
+            var parameter = this.getParameter(name);
+            if (parameter.required() && !params.hasOwnProperty(name)) {
+                throw new Error("missing required parameter: "+name);
+            }
+        }.bind(this));
+        // process provided args
+        var request = new Api.Request(this);
+        Object.keys(params).forEach(function (name) {
+            var parameter = this.getParameter(name);
+            parameter.process(request, params[name]);
+        }.bind(this));
+        return request.exec();
+    } catch (error) {
+        return Promise.reject(error);
+    }
 };
 
 
@@ -177,7 +181,7 @@ Api.Request = function (endpoint) {
     this.path = {};
     this.query = {};
     this.body = {};
-    this.auth = {};
+    this.auth = null;
 };
 
 Api.Request.prototype.addHeaderParam = function (name, value) {
@@ -201,6 +205,7 @@ Api.Request.prototype.addBodyParam = function (name, value) {
 };
 
 Api.Request.prototype.addAuthParam = function (name, value) {
+    this.auth = this.auth || {};
     this.auth[name] = value;
     return this;
 };
@@ -228,18 +233,15 @@ Api.Request.prototype.exec = function () {
     }
     requestOpts.auth = this.auth;
     return new Promise(function (resolve, reject) {
-        console.log(requestOpts);
         request(requestOpts, function (err, message, body) {
             if (err) {
                 console.error(err);
                 reject(err);
             } else if (message.statusCode >= 400) {
                 console.error(message.statusCode);
-                console.log(body);
                 reject(new Error(message.statusCode));
             } else {
-                console.log(body);
-                resolve(body);
+                resolve(JSON.parse(body));
             }
         });
     }.bind(this));
