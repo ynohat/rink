@@ -43,7 +43,7 @@ Object.keys(defs.endpoints).forEach(function (endpointName) {
                     console.log(yaml.dump(result));
                 })
                 .catch(function (error) {
-                    console.error(error);
+                    console.error(yaml.dump(error));
                 });
         }
     });

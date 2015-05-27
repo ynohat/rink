@@ -40,6 +40,9 @@ Api.prototype.getDataType = function (def) {
             case Api.DataType.Enum.NAME:
                 dataType = new Api.DataType.Enum(this, def);
                 break;
+            case Api.DataType.Boolean.NAME:
+                dataType = new Api.DataType.Boolean(this, def);
+                break;
             case Api.DataType.Scalar.NAME:
             default:
                 dataType = new Api.DataType.Scalar(this, def);
@@ -239,7 +242,7 @@ Api.Request.prototype.exec = function () {
                 reject(err);
             } else if (message.statusCode >= 400) {
                 console.error(message.statusCode);
-                reject(new Error(message.statusCode));
+                reject(JSON.parse(body));
             } else {
                 resolve(JSON.parse(body));
             }
@@ -266,6 +269,31 @@ Api.DataType.Scalar.NAME = "scalar";
 
 Api.DataType.Scalar.prototype.serialize = function (value) {
     return value;
+};
+
+
+Api.DataType.Boolean = function (api, def) {
+    this.api = api;
+    this.def = def;
+};
+
+util.inherits(Api.DataType.Boolean, Api.DataType);
+
+Api.DataType.Boolean.NAME = "boolean";
+
+Api.DataType.Boolean.prototype.serialize = function (value) {
+    switch (value) {
+        case "1":
+        case "true":
+        case "yes":
+            return "true";
+        case "0":
+        case "false":
+        case "no":
+            return "false";
+        default:
+            throw new Error("invalid boolean value "+value);
+    }
 };
 
 

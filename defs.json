@@ -49,6 +49,16 @@
                 "store": 1,
                 "enterprise": 3
             }
+        },
+        "platform": {
+            "type": "enum",
+            "values": {
+                "iOS": "iOS",
+                "Android": "Android",
+                "Mac OS": "Mac OS",
+                "Windows Phone": "Windows Phone",
+                "Custom": "Custom"
+            }
         }
     },
     "defaults": {
@@ -112,7 +122,23 @@
                 "release_type": { "type": "release_type" },
                 "commit_sha": { "type": "scalar" },
                 "build_server_url": { "type": "scalar" },
-                "repository_url": { "type": "scalar" }
+                "repository_url": { "type": "scalar" },
+                "private": { "type": "boolean" }
+            }
+        },
+        "post_apps_new": {
+            "description": "Create a new app without uploading a file.",
+            "path": "apps/new",
+            "method": "POST",
+            "contentType": "multipart/form-data",
+            "params": {
+                "title": { "type": "scalar", "required": true },
+                "bundle_identifier": { "type": "scalar", "required": true },
+                "platform": { "type": "platform" },
+                "release_type": { "type": "release_type" },
+                "custom_release_type": { "type": "scalar" },
+                "icon": { "type": "file" },
+                "private": { "type": "boolean" }
             }
         }
     }
