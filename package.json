@@ -1,6 +1,6 @@
 {
   "name": "rink",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Node wrapper around the hockeyapp API.",
   "main": "index.js",
   "scripts": {
